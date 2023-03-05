@@ -6,7 +6,6 @@ class App extends Component {
     neutral: 0,
     bad: 0,
   };
-
   postiveFeedbackIncrement = () => {
     this.setState({ good: this.state.good + 1 });
   };
@@ -18,12 +17,20 @@ class App extends Component {
   badFeedbackIncrement = () => {
     this.setState({ bad: this.state.bad + 1 });
   };
-
+    
   countTotalFeedback = () => {
-    const total = this.state.good + this.state.neutral + this.state.bad;
-    console.log(total);
+    let total = this.state.good + this.state.neutral + this.state.bad;
+    return total;
+  }
+  countPositiveFeedbackPercentage = () => {
+    let feedback = this.state.good / (this.state.good + this.state.bad + this.state.neutral) * 100;
+    let abc = Math.round(feedback)
+    return abc;
   }
   render() {
+    let total = this.countTotalFeedback();
+    let feedback = this.countPositiveFeedbackPercentage();
+    console.log(isNaN(feedback))
     return (
       <div>
         <h1>Відгуки</h1>
@@ -41,7 +48,8 @@ class App extends Component {
           <p>Good: {this.state.good}</p>
           <p>Neutral: {this.state.neutral}</p>
           <p>Bad: {this.state.bad}</p>
-          <p>Total: {this.state.good + this.state.neutral + this.state.bad}</p>
+          <p>Total: {total}</p>
+          <p>Positive feedback: {isNaN(feedback) ? 0 : feedback}%</p>
         </div>
       </div>
     );
